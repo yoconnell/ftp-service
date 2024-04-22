@@ -53,8 +53,11 @@ public class FtpController {
     }
 
     @GetMapping(value="/getList")
-    public String getList() throws IOException, InterruptedException {
-        FtpUserVo userVo = ftpService.generateFtpUserVo("EASY_USER_FTP","EASY_FTP");
+    public String getList(
+            @RequestParam(value ="접근 USER",defaultValue = "EASY_USER_FTP") String userNm,
+            @RequestParam(value ="FTP 정보",defaultValue = "EASY_FTP") String dstFtp
+    ) throws IOException, InterruptedException {
+        FtpUserVo userVo = ftpService.generateFtpUserVo(userNm,dstFtp);
         ftpService.connectNlogin(userVo);
         FileVo fileVo = FileVo.builder()
                         .ftpFolder("./SND/")
@@ -65,15 +68,20 @@ public class FtpController {
 
 
     @GetMapping(value="/disConnect")
-    public String disConnect() throws IOException, InterruptedException {
-        FtpUserVo userVo = ftpService.generateFtpUserVo("EASY_USER_FTP","EASY_FTP");
+    public String disConnect(
+            @RequestParam(value ="접근 USER",defaultValue = "EASY_USER_FTP") String userNm,
+            @RequestParam(value ="FTP 정보",defaultValue = "EASY_FTP") String dstFtp
+    ) throws IOException, InterruptedException {
+        FtpUserVo userVo = ftpService.generateFtpUserVo(userNm,dstFtp);
         ftpService.disconnectNlogout(userVo);
         return "result";
     }
 
     @GetMapping(value="/connectNLogin")
-    public String connectNLogin() throws IOException, InterruptedException {
-        FtpUserVo userVo = ftpService.generateFtpUserVo("EASY_USER_FTP","EASY_FTP");
+    public String connectNLogin(
+            @RequestParam(value ="접근 USER",defaultValue = "EASY_USER_FTP") String userNm,
+            @RequestParam(value ="FTP 정보",defaultValue = "EASY_FTP") String dstFtp) throws IOException, InterruptedException {
+        FtpUserVo userVo = ftpService.generateFtpUserVo(userNm,dstFtp);
         ftpService.connectNlogin(userVo);
         return "result";
     }
